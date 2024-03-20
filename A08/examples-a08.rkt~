@@ -1,0 +1,97 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname examples-a08) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 08, check-expects 
+;; ***************************************************
+;;
+
+;; question 1b, function partition
+
+(check-expect (partition apple? (list "banana" "apple" "apple" "green" "yellow" "kiwi"))
+              (list "apple" "apple") (list "banana" "green" "yellow" "kiwi"))
+
+(check-expect (partition string? (list "banana" "apple" 'cs135 "blue" 135))
+              (list "banana" "apple" "blue") (list 'cs135 135))
+
+(check-expect (partition number? (list 111 "apple" 'cs135 "blue" 135))
+              (list 111 135) (list "apple" 'cs135 "blue"))
+
+;; question 2a, function or-pred
+
+(check-expect (or-pred even? empty) false)
+(check-expect (or-pred odd? (list 6 10 4)) false)
+(check-expect (or-pred string? (list 5 "wow")) true)
+(check-expect (or-pred even? (list 5 3 7 6) true))
+(check-expect (or-pred number? (list '1 '2 '3) false))
+
+;; question 2b, function map2argfn
+
+(check-expect (map2argfn (list + - * / list) (list 3 2)) (list 5 1 6 1.5 (list 3 2)))
+(check-expect (map2argfn (list + - * / cons) (list 3 2)) (list 5 1 6 1.5 (cons 3 (cons 2))))
+(check-expect (map2argfn (list * + - /) (list 8 4)) (list 32 12 4 2))
+
+;; question 2c, function arranged?
+
+(check-expect (arranged? (list integer? <) (list)) true)
+(check-expect (arranged? (list string? >) (list)) true)
+(check-expect (arranged? (list integer? >) (list 1)) true)
+(check-expect (arranged? (list integer? >) (list 'red)) false)
+(check-expect (arranged? (list string? >) (list "wow" 'red)) false)
+(check-expect (arranged? (list string? >) (list "wow" "orange" "red" 'red)) false)
+(check-expect (arranged? (list string? string>?) (list "wow" "cs135" "amazing")) true)
+
+;; question 3, function tree-pred
+
+(check-expect ((tree-pred even?) t) false)
+(check-expect ((tree-pred positive?) t) true)
+(check-expect ((tree-pred string?) t) false)
+(check-expect ((tree-pred number?) t) true)
+
+;; question 4b, function nested-filter
+
+(check-expect (nested-filter positive? (list 1 (list 2 3) -1 -5 6 (list 5 8)))
+              (list 1 (list 2 3) 6 (lst 5 8)))
+(check-expect (nested-filter string? (list 1 (list "hello" "hi" (list 1 2)) "yum" 'cs145))
+              (list (list "hello" "hi" (list ) "yum")))
+
+;; question 4c, function ruthless
+
+(check-expect (ruthless '(rabbit (apple pluto (ruth blue) ruth)
+                                 hello))
+              '(rabbit (apple pluto (blue)) hello))
+
+(check-expect (ruthless '(cs135 cs145 ruth (orange yasmeen kenzie) (ruth (ruth hello) phone)))
+              '(cs135 cs145 (orange yasmeen kenzie) ((hello) phone)))
+
+;; question 4d, function keep-between
+
+(check-expect (keep-between 5 10 '(1 3 5 (7 9 10) (8 (3 4)) 8 15))
+              '(5 (7 9 10) (8 ()) 8))
+
+(check-expect (keep-between 9 11 '(1 5 8 10 (11 12 13) (9 (10 3) 17)))
+              '(10 (11) (9 (10))))
+
+(check-expect (keep-between 4 10 '(3 4 5 6 (7 8 9 (10 11) 12) 2 2))
+              '(4 5 6 (7 8 9 (10)) 2 2))
+
+;; question 4e, function nested-cleanup
+
+(check-expect (nested-cleanup '(1 () 2 () () 3))
+              '(1 2 3))
+
+(check-expect (nested-cleanup '(1 (()()) 2 ((3 () (()))) ))
+              '(1 2 ((3))))
+
+(check-expect (nested-cleanup '(()(()())(())()))
+              false)
+
+(check-expect (nested-cleanup '(1 2 3 () 4 (5 ())))
+              '(1 2 3 4 (5)))
+
+;; question 5a, function nested-cleanup
+
+(

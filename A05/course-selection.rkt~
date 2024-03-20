@@ -1,0 +1,52 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname course-selection) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 05, check-expect examples 
+;; ***************************************************
+;;
+
+
+(define selections
+  (list
+   (list "lanarey" (list 'MATH145 'MATH147 'CS145 'COMMST100 'MUSIC270))
+   (list "shawkings" (list 'PHYS111 'SCI206 ' MATH115 'FINE100))
+   (list "tshakur" (list 'ANTH241 'STAT230 'AFM101 'MUSIC140))
+   (list "6obama" (list 'COMMST223 'PSCI281 'PSCI231 'MATH137))))
+
+;; (taking-course? dc q-user c-code) consumes a DesiredCourses, a student’s Quest username, and a
+;; course code, and produces true if the student has selected the course (and false otherwise).
+
+;; Example:
+
+(check-expect (taking-course? selections "lanarey" 'MATH145) true)
+
+;; taking-course?: DesiredCourses Str Sym -> Bool
+
+(define (taking-course? dc q-user c-code)
+  (cond
+    [(empty? dc) ...]
+    [(member? c-code (lookup-dc q-user selections)) true]
+    [else false]))
+
+
+
+(define (key selections) (first selections))
+(define (val selections) (second selections))
+;; (lookup-dc k alst) consumes a key and a dictionary and produces the corresponding
+;; value when it's found
+
+;; Example:
+
+(check-expect (lookup-dc "lanarey" selections) (list 'MATH145 'MATH147 'CS145 'COMMST100 'MUSIC270))
+
+;; lookup-dc: Str DesiredCourse -> anyof (listof Sym) Bool
+
+(define (lookup-dc k alst)
+  (cond
+    [(empty? alst) false]
+    [(string=? k (key (first alst))) (val (first alst))]
+    [else (lookup-dc k (rest alst))]))

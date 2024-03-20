@@ -1,0 +1,47 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname collide) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 03, Question 4
+;; ***************************************************
+;;
+
+
+;; (List->parts lst) consumes a list and returns each part of the
+;; list as lst_first, lst_second, lst_third, and lst_fourth respectfully
+
+(define (lst_first lst)
+  (first lst))
+
+(define (lst_second lst)
+  (first (rest lst)))
+
+(define (lst_third lst)
+  (first (rest (rest lst))))
+
+(define (lst_third lst)
+  (first (rest (rest (rest lst)))))
+
+;; Examples
+(check-expect (lst_first (cons 0 (cons 1 (cons 3 empty)))) 0)
+(check-expect (lst_second (cons 0 (cons 1 (cons 3 empty)))) 1)
+(check-expect (lst_third (cons 0 (cons 1 (cons 3 empty)))) 3)
+
+;; (build-sphere sphere_lst) consumes a list of four numbers as (cons
+;; x (cons y (cons z (cons r empty)))) and produces a sphere that has the form
+;; (cons (cons x (cons y (cons z empty))) (cons r empty))
+
+;;Examples:
+
+(check-expect (build-sphere (cons 1 (cons 2 (cons 3 (cons 4 empty)))))
+              (cons (cons 1 (cons 2 (cons 3 empty))) (cons 4 empty)))
+
+;; (listof Nat) -> (listof Nat) (Listof Nat) *****
+
+(define (build-sphere sphere_lst)
+  (cons (lst_first sphere_lst)
+        (cons (lst_second sphere_lst)
+              (cons (lst_third sphere_lst) empty))) (

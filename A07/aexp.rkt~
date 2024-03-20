@@ -1,0 +1,62 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-reader.ss" "lang")((modname aexp) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 07, question 2
+;; ***************************************************
+;;
+
+
+;; ~~~~~ 2a
+
+
+;; An Arithmetic Expression (AExp) is one of:
+;; * Num
+;; * Sym
+;; * OpNode
+
+(define-struct opnode (op args))
+;; An Operator Node (OpNode) is a
+;; (make-opnode (anyof '* '+) (listof AExp))
+
+
+;; ~~~~~ 2b *******
+
+(define (aexp-template exp)
+  (cond
+    [(or(number? exp) (symbol? exp))  exp]
+    [(opnode? exp) (apply (opnode-op exp)
+                          (opnode-args exp))]))
+
+
+;; ~~~~~ 2c
+
+;; (eval2 exp) consumes an arithmetic expression and evaluates it
+
+;; Examples:
+
+(check-expect (eval (list '+ 'x 1) sym-table) 2)
+
+;; eval2: AExp -> Num
+
+(define (eval2 exp)
+  (cond
+    [(or(number? exp) (symbol? exp))  exp]
+    [(opnode? exp) (apply (opnode-op exp)
+                          (opnode-args exp))]))
+
+;; Tests:
+
+
+(define (apply op args)
+  (cond
+    [(empty? args) (cond
+                     [(symbol=? op '+) 0]
+                     [(symbol=? op '*) 1])]
+    [(symbol=? op '+) (+ (eval (first args))
+                         (apply op (rest args)))]
+    [(symbol=? op '*) (* (eval (first args))
+                         (apply op (rest args)))]))

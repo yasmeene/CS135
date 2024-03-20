@@ -1,0 +1,26 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname morelistfun) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 06, problem 1
+;; ***************************************************
+;;
+
+;; (my-list-ref lst index) consumes a list of numbers and an index, and produces the element in
+;; the list at the consumed index.
+
+;; Examples:
+
+(check-expect (my-list-ref (list 1 2 3 4) 0) 1)
+(check-expect (my-list-ref (list 5 4 3) 2) 3)
+
+;; my-list-ref: (listof Num) Num -> (anyof Num Bool)
+
+(define (my-list-ref lst index)
+  (cond
+    [(empty? lst) false]
+    [(zero? index) (first lst)]
+    [else (my-list-ref (rest lst) (sub1 index))]

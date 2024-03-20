@@ -1,0 +1,30 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname rgb) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 03, Question 3
+;; ***************************************************
+;;
+
+;; (RGB->name (cons a (cons b (cons c empty)))) consumes a three element list and produces the colour name correlating with that RGB value.
+
+;; Examples:
+(check-expect (RGB->name (cons 0 (cons 255 (cons 0 empty)))) 'green)
+
+;; An RGB Triplet (RGB) is a (cons Nat (cons Nat (cons Nat empty)))
+;; (Listof Nat) -> Sym
+;; requires: each element in the list must be <= 255
+
+(define (RGB->name (cons a (cons b (cons c empty))))
+  (cond
+    [(= (first (cons a (cons b (cons c empty)))) (first (rest (cons a (cons b (cons c empty)))))) (cond
+                                                                                                        [(= (first (rest (cons a (cons b (cons c empty))))) (first (rest (rest (cons a (cons b (cons c empty)))))) 0) 'black]
+                                                                                                        [(= (first (rest (cons a (cons b (cons c empty))))) (first (rest (rest (cons a (cons b (cons c empty)))))) 255) 'white]
+                                                                                                        [(= (first (rest (rest (cons a (cons b (cons c empty)))))) 255) 'blue]
+                                                                                                        [else 'yellow])]
+    
+    [(= (first (cons a (cons b (cons c empty)))) (first (rest (rest (cons a (cons b (cons c empty))))))) (cond
+                                                                                                           [

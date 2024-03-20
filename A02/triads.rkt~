@@ -1,0 +1,34 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname triads) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 02, Problem 5
+;; ***************************************************
+;;
+
+(define (pitch-num x)
+  (cond
+    [(symbol=? x 'c) 0]
+    [(symbol=? x 'c#) 1]
+    [(symbol=? x 'd) 2]
+    [(symbol=? x 'd#) 3]
+    [(symbol=? x 'e) 4]
+    [(symbol=? x 'f) 5]
+    [(symbol=? x 'f#) 6]
+    [(symbol=? x 'g) 7]
+    [(symbol=? x 'g#) 8]
+    [(symbol=? x 'a) 9]
+    [(symbol=? x 'a#) 10]
+    [(symbol=? x 'b) 11]))
+
+(define (triad-type r h j) ; r is the root, h and j are any other two pitches
+  (cond
+    (cond
+      [(= (+ (pitch-num r) 7) (pitch-num j)) (cond
+                                   [(= (+ (pitch-num r) 4)) 'Major]
+                                   [else 'Minor])]
+    [(and (= (+ (pitch-num r) 3) (pitch-num h)) (= (+ (pitch-num r) 6) (pitch-num j))) 'Diminished]
+    [else 'Augmented])))

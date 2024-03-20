@@ -1,0 +1,38 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname examples-a05) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+
+(define selections
+  (list
+   (list "lanarey" (list 'MATH145 'MATH147 'CS145 'COMMST100 'MUSIC270))
+   (list "shawkings" (list 'PHYS111 'SCI206 ' MATH115 'FINE100))
+   (list "tshakur" (list 'ANTH241 'STAT230 'AFM101 'MUSIC140))
+   (list "6obama" (list 'COMMST223 'PSCI281 'PSCI231 'MATH137))))
+
+
+
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 05, check-expect examples 
+;; ***************************************************
+;;
+
+;; question 2a, function taking-course?
+
+(check-expect (taking-course? selections "lanarey" 'MATH145) true)
+(check-expect (taking-course? selections "shawkings" 'PHYS111) true)
+(check-expect (taking-course? selections "tshakur" 'ANTH241) false)
+
+;; question 2b, function missed-deadline-add
+
+(check-expect (missed-deadline-add "m3marco") (list
+   (list "lanarey" (list 'MATH145 'MATH147 'CS145 'COMMST100 'MUSIC270))
+   (list "shawkings" (list 'PHYS111 'SCI206 ' MATH115 'FINE100))
+   (list "tshakur" (list 'ANTH241 'STAT230 'AFM101 'MUSIC140))
+   (list "6obama" (list 'COMMST223 'PSCI281 'PSCI231 'MATH137))
+   (list "m3marco" empty))
+
+;; question 2c
+              

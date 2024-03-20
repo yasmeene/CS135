@@ -1,0 +1,47 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname examples-a07) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 07, check-expect examples
+;; ***************************************************
+;; 3a,3b,3c, 3d
+
+;; ~~~~~~~~~~~~~~~
+;; question 1, function contains-component?
+
+(check-expect (contains-component? bike "hub") true)
+(check-expect (contains-component? bike "brake") false)
+(check-expect (contains-component? car "seat") true)
+(check-expect (contains-component? car "cat") false)
+
+;; ~~~~~~~~~~~~~~~
+;; question 2c, function eval ******
+
+(check-expect (eval (list '+ 'x 1) sym-table) 2)
+(check-expect (eval (list '- 'y 2) sym-table) 0)
+(check-expect (eval (list '* 3 'z) sym-table) 12)
+
+;; ~~~~~~~~~~~~~~~
+;; question 2d, function simplify
+
+(check-expect (simplify (make-opnode '+ (list 4 'x 5)))
+                        (make-opnode '+ (list 'x 9)))
+
+(check-expect (simplify (make-opnode '* (list 4 'x 5)))
+                        (make-opnode '* (list 'x 20)))
+
+(check-expect (simplify (make-opnode '+ (list 3 'x 3)))
+                        (make-opnode '+ (list 'x 6)))
+
+(check-expect (simplify (make-opnode '* (list 1 'x 1)))
+                        (make-opnode '* (list 'x 1)))
+
+(check-expect (simplify (make-opnode '+ (list 2 3 4))) 9)
+
+;; ~~~~~~~~~~~~~~~
+;; question 3a, function list-files
+
+(check-expect (list-files 

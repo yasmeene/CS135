@@ -1,0 +1,27 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname partition) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 08, question 1
+;; ***************************************************
+;;
+
+;; (partition pred lst) consumes a predicate and a list and produces a two element list where the
+;; first element is a list of items that satisfy the predicate and the second element is a list of
+;; items that dont
+
+;; Example:
+
+(check-expect (partition string? (list "banana" "apple" 'cs135 "blue" 135))
+              (list (list "banana" "apple" "blue") (list 'cs135 135)))
+
+;; partition: (Any -> Bool) (listof Any) -> (listof Any) (listof Any)
+
+(define (partition pred lst)
+  (cond
+    [(empty? lst) empty]
+    [(pred (first lst)) (list (first lst) (partition pred (rest lst)))]
+    [else (list (first lst) (partition pred (rest lst)))]))

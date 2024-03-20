@@ -1,0 +1,37 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname steppingtest) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+(define selections
+  (list
+   (list "lanarey" (list 'MATH145 'MATH147 'CS145 'COMMST100 'MUSIC140))
+   (list "shawkings" (list 'PHYS111 'SCI206 ' MATH145 'FINE100))
+   (list "2pac" (list 'ANTH241 'STAT230 'SCI206 'MUSIC140))
+   (list "6obama" (list 'COMMST223 'PSCI281 'PSCI231 'MATH137))))
+
+(define (taking-course? dc q-user c-code)
+  (cond
+    [(empty? dc) false]
+    [(and (member? q-user (key dc)) (member? c-code (lookup-dc q-user selections))) true]
+    [else false]))
+
+(check-expect (taking-course? selections "shawkings" 'SCI206) true)
+
+(define (key selections) (first selections))
+(define (val selections) (second selections))
+
+;; (lookup-dc k alst) consumes a key and a dictionary and produces the corresponding
+;; value when it's found
+
+;; Example:
+
+(check-expect (lookup-dc "lanarey" selections) (list 'MATH145 'MATH147 'CS145 'COMMST100 'MUSIC140))
+(check-expect (lookup-dc "6obama" empty) false)
+(check-expect (lookup-dc "2pac" selections) (list 'ANTH241 'STAT230 'SCI206 'MUSIC140))
+
+;; lookup-dc: Str DesiredCourse -> anyof (listof Sym) Bool
+
+(define (lookup-dc k alst)
+  (cond
+    [(empty? alst) false]
+    [(string=? k (key (first alst))) (val (first alst))]
+    [else (lookup-dc k (rest alst))]))

@@ -1,0 +1,37 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname goldbach) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 10, question 1
+;; ***************************************************
+;;
+
+;; ~~~~~ 2a
+
+;; (primes n) consumes a natural number and returns a list of primes that
+;; are less than or equal to that number
+
+;; Examples:
+
+;(check-expect (primes 20) '(2 3 5 7 11 13 17 19))
+;(check-expect (primes 10) '(2 3 5 7))
+
+;; primes: Nat -> (listof Nat)
+
+(define (primes n)
+  (local
+    [
+     (define candidates (rest (build-list n add1)))
+     (define (sieve lop)
+       (cond
+         [(empty? candidates) lop]
+         [else (cons (first candidates lop) (filter
+                                             (lambda (x)
+                                               (= 0 (modulo x (first candidates))))
+                                             (rest candidates)))]))])
+  n)
+
+(primes 20)         

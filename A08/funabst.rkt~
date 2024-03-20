@@ -1,0 +1,28 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname Untitled) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 08, question 2
+;; ***************************************************
+;;
+
+;; ~~~~~ 2a
+
+;; (or-pred pred lst) consumes a predicate and a list, and produces true if any element of the
+;; consumes list produces true, otherwise the function produces false
+
+;; Examples:
+
+(check-expect (or-pred even? empty) false)
+(check-expect (or-pred odd? (list 6 10 4)) false)
+
+;; or-pred: (Any -> Bool) (listof Any) -> Bool
+
+(define (or-pred pred lst)
+  (cond
+    [(empty? lst) false]
+    [(pred (first lst)) true]
+    [else (or-pred pred (rest lst))]))

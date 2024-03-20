@@ -1,0 +1,21 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-intermediate-lambda-reader.ss" "lang")((modname alf-warmup) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor mixed-fraction #f #t none #f () #t)))
+;;
+;; ***************************************************
+;; Yasmeen Elkheir (21071183)
+;; CS 135 Fall 2023
+;; Assignment 09, question 2
+;; ***************************************************
+;;
+
+;; ~~~~~ 2a
+
+(define (absolutely-odd loi)
+  (cond
+    [(empty? loi) 0]
+    [(odd? (first loi)) (+ (lambda (x) (abs x)) (absolutely-odd (rest loi)))]
+    [else (absolutely-odd (rest loi))]))
+
+(check-expect (absolutely-odd '(1 -5 4 6 5)) 11)
+;;(check-expect (absolutely-odd '()) 0)
